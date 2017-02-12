@@ -34,6 +34,19 @@ class Storyblok {
     return apiRequest(requestUrl);
   }
 
+  getStories (options) {
+    if (!options) { options = {}; }
+    let version = options.version;
+    if (!version) { version = 'published'; }
+
+    let requestUrl = url.parse(`${this.endpoint}v1/cdn/stories`, true);
+
+    requestUrl.query.version = version;
+    requestUrl.query.token = this.getToken(version);
+
+    return apiRequest(requestUrl);
+  }
+
   getToken (version) {
     switch (version) {
       case Storyblok.MODE_PUBLISHED:

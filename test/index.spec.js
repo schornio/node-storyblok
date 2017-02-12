@@ -5,6 +5,7 @@ const expect = require('chai').expect;
 const jsonServer = require('json-server');
 
 const testDataStory = require('./_data/story.json');
+const testDataStories = require('./_data/stories.json');
 const testDataNotFound = require('./_data/notFound.json');
 const testDataUnauthorized = require('./_data/unauthorized.json');
 const testServerPort = 13370;
@@ -34,6 +35,10 @@ describe('# Storyblok', () => {
       response.json(testDataStory);
     });
 
+    testServer.get('/v1/cdn/stories', (request, response) => {
+      response.json(testDataStories);
+    });
+
     testServer.use((request, response) => {
       response.status(404).json(testDataNotFound);
     });
@@ -55,6 +60,24 @@ describe('# Storyblok', () => {
     let response = yield storyblokInstance.getStory('testStory', Storyblok.MODE_DRAFT);
 
     expect(response).to.deep.equal(testDataStory);
+  }));
+
+  it('should get all stories', co.wrap(function* () {
+    let storyblokInstance = new Storyblok({ public: 'public_key' }, testServerEndpoint);
+
+    let response = yield storyblokInstance.getStories();
+
+    expect(response).to.deep.equal(testDataStories);
+  }));
+
+  it('should get all story drafts', co.wrap(function* () {
+    let storyblokInstance = new Storyblok({ private: 'private_key' }, testServerEndpoint);
+
+    let response = yield storyblokInstance.getStories({
+      version: Storyblok.MODE_DRAFT
+    });
+
+    expect(response).to.deep.equal(testDataStories);
   }));
 
   it('should respond with "Not found" if slug not found', co.wrap(function* () {
