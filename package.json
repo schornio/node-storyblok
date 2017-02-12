@@ -1,0 +1,28 @@
+{
+  "name": "node-storyblok",
+  "version": "0.0.0",
+  "description": "Storyblok API interface for Node.js (4+)",
+  "main": "index.js",
+  "scripts": {
+    "test": "jshint ./ && istanbul cover _mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/schornio/node-storyblok.git"
+  },
+  "keywords": [
+    "storyblok"
+  ],
+  "author": "Thomas Schorn",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/schornio/node-storyblok/issues"
+  },
+  "homepage": "https://github.com/schornio/node-storyblok#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "istanbul": "^0.4.5",
+    "jshint": "^2.9.4",
+    "mocha": "^3.2.0"
+  }
+}
