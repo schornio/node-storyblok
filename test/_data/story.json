@@ -1,0 +1,27 @@
+{
+  "story": {
+    "name": "Home",
+    "created_at": "2017-02-12T11:01:24.422Z",
+    "published_at": "2017-02-12T11:02:12.572Z",
+    "alternates": [],
+    "id": 43203,
+    "uuid": "a98a9f2e-2bee-49e7-958a-becd101c85de",
+    "content": {
+      "_uid": "2e5a8e57-0c4c-4d6d-a435-b24a3818ef04",
+      "body": [
+        {
+          "_uid": "1ffa628c-d79e-467b-99fd-89ceecdb6abd",
+          "valueA": "",
+          "valueB": "",
+          "component": "test_component"
+        }
+      ],
+      "component": "root"
+    },
+    "slug": "home",
+    "full_slug": "home",
+    "sort_by_date": null,
+    "tag_list": [],
+    "is_startpage": false
+  }
+}

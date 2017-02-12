@@ -21,8 +21,13 @@
   "homepage": "https://github.com/schornio/node-storyblok#readme",
   "devDependencies": {
     "chai": "^3.5.0",
+    "co": "^4.6.0",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.4",
+    "json-server": "^0.9.5",
     "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "request": "^2.79.0"
   }
 }
