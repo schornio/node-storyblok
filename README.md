@@ -28,8 +28,9 @@ let sb = new Storyblok({ public: 'public_key_here' });
 
 **Parameters**
 - `[return]` Promise, Object `story`
-- `slug` String, story-slug
-- `version` String, default: `Storyblok.MODE_PUBLISHED`
+- `id` String, story-id
+- `options` Object
+  - `version` String, default: `Storyblok.MODE_PUBLISHED`
 
 **Example**
 

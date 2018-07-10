@@ -8,11 +8,17 @@ const apiRequest = require('./src/apiRequest');
 class Storyblok {
 
   constructor(tokens, endpoint) {
-    if (!endpoint) { endpoint = API_ENDPOINT_DEFAULT; }
+
+    if (!endpoint) {
+
+      endpoint = API_ENDPOINT_DEFAULT;
+
+    }
 
     this.publicToken = tokens.public;
     this.privateToken = tokens.private;
     this.endpoint = endpoint;
+
   }
 
   static get MODE_DRAFT () {
@@ -23,39 +29,56 @@ class Storyblok {
     return 'published';
   }
 
-  getStory (slug, version) {
-    if (!version) { version = 'published'; }
+  _defaultOptions (options) {
 
-    let requestUrl = url.parse(`${this.endpoint}v1/cdn/stories/${slug}`, true);
+    if (!options.version) {
 
-    requestUrl.query.version = version;
-    requestUrl.query.token = this.getToken(version);
+      options.version = Storyblok.MODE_PUBLISHED;
+
+    }
+
+    if (!options.token) {
+
+      options.token = this.getToken(options.version);
+
+    }
+
+    return options;
+
+  }
+
+  getStory (id, options) {
+
+    let requestUrl = url.parse(`${this.endpoint}v1/cdn/stories/${id}`, true);
+    let requestOptions = this._defaultOptions({ ...options });
+
+    requestUrl.query = requestOptions;
 
     return apiRequest(requestUrl);
   }
 
   getStories (options) {
-    if (!options) { options = {}; }
-    let version = options.version;
-    if (!version) { version = 'published'; }
-    let token = options.token;
-    if (!token) { token = this.getToken(version); }
 
     let requestUrl = url.parse(`${this.endpoint}v1/cdn/stories`, true);
+    let requestOptions = this._defaultOptions({ ...options });
 
-    requestUrl.query.version = version;
-    requestUrl.query.token = token;
+    requestUrl.query = requestOptions;
 
     return apiRequest(requestUrl);
   }
 
   getToken (version) {
+
     switch (version) {
+
       case Storyblok.MODE_PUBLISHED:
         return this.publicToken;
+
       case Storyblok.MODE_DRAFT:
         return this.privateToken;
+
     }
+
   }
 }
 

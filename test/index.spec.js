@@ -15,6 +15,7 @@ const Storyblok = require('../index');
 
 describe('# Storyblok', () => {
   let testServer;
+  let testServerInstance;
 
   before((next) => {
     testServer = jsonServer.create();
@@ -43,7 +44,13 @@ describe('# Storyblok', () => {
       response.status(404).json(testDataNotFound);
     });
 
-    testServer.listen(testServerPort, next);
+    testServerInstance = testServer.listen(testServerPort, next);
+  });
+
+  after(() => {
+
+    testServerInstance.close();
+
   });
 
   it('should get a story by its slug', co.wrap(function* () {
@@ -57,7 +64,15 @@ describe('# Storyblok', () => {
   it('should get a story draft by its slug', co.wrap(function* () {
     let storyblokInstance = new Storyblok({ private: 'private_key' }, testServerEndpoint);
 
-    let response = yield storyblokInstance.getStory('testStory', Storyblok.MODE_DRAFT);
+    let response = yield storyblokInstance.getStory('testStory', { version: Storyblok.MODE_DRAFT });
+
+    expect(response).to.deep.equal(testDataStory);
+  }));
+
+  it('should get a story by provided token', co.wrap(function* () {
+    let storyblokInstance = new Storyblok({ private: 'private_key' }, testServerEndpoint);
+
+    let response = yield storyblokInstance.getStory('testStory', { token: 'public_key' });
 
     expect(response).to.deep.equal(testDataStory);
   }));
