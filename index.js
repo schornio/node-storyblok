@@ -38,11 +38,13 @@ class Storyblok {
     if (!options) { options = {}; }
     let version = options.version;
     if (!version) { version = 'published'; }
+    let token = options.token;
+    if (!token) { token = this.getToken(version); }
 
     let requestUrl = url.parse(`${this.endpoint}v1/cdn/stories`, true);
 
     requestUrl.query.version = version;
-    requestUrl.query.token = this.getToken(version);
+    requestUrl.query.token = token;
 
     return apiRequest(requestUrl);
   }
